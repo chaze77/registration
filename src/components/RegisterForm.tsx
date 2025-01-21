@@ -63,7 +63,6 @@ const RegisterForm = () => {
   };
 
   const onSubmit = async (data: FormValues) => {
-    console.log('Отправка данных:', data);
     setIsloading(true); // Включаем индикатор загрузки
     try {
       await createDocument(DATABASE_ID, COLLECTION_ID, data);
