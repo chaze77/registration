@@ -8,12 +8,25 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node", // Node для работы с модулями
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+
+    /* Path alias */
+    "baseUrl": "./", // Указывает на корень проекта
+    "paths": {
+      "@/*": ["src/*"], // Основной алиас
+      "@components/*": ["src/components/*"], // Для компонентов
+      "@store/*": ["src/store/*"], // Для Zustand или других хранилищ
+      "@utils/*": ["src/utils/*"],
+      "@appwrite/*": ["src/appwrite/*"],
+      "@constants/*": ["src/constants"]
+    },
 
     /* Linting */
     "strict": true,
