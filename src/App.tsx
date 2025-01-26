@@ -1,13 +1,13 @@
 // import { SuccessContext, SuccessProvider } from './SuccessContext';
 
-import { SnackbarProvider } from 'notistack';
-import Authorization from './pages/Authorization';
+import { RouterProvider } from 'react-router-dom';
+import router from './router';
 
 function App() {
   return (
-    <SnackbarProvider maxSnack={3}>
-      <Authorization />
-    </SnackbarProvider>
+    <div className='App'>
+      <RouterProvider router={router} />
+    </div>
   );
 }
 

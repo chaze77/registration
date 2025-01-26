@@ -1,4 +1,5 @@
 import { fields } from '@/constants/formValues';
+import useAuthStore from '@/store/useAuthStore';
 import {
   Box,
   Button,
@@ -27,8 +28,10 @@ const Login = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log('data');
+  const login = useAuthStore((state) => state.login);
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    await login(data.email, data.password);
   };
 
   return (
