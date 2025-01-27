@@ -38,7 +38,7 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, onConfirm, content }) => {
           <WarningIcon
             sx={{
               fontSize: '4rem',
-              color: 'error.main',
+              color: 'error',
             }}
           />
         </Box>
@@ -64,7 +64,7 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, onConfirm, content }) => {
           </Button>
           <Button
             onClick={onClose}
-            color='neutral'
+            color='secondary'
             variant='outlined'
           >
             Нет
