@@ -3,7 +3,7 @@ import { account } from '@/appwrite/config';
 import showMessage from '@/hooks/useNotify';
 
 import { User } from '@/types';
-import useGlobalStore from './useGlobalStore';
+
 import messages from '@/constants/messages';
 import { translateError } from '@/utils/translateError';
 
@@ -24,19 +24,29 @@ const useAuthStore = create<AuthState>((set) => ({
   initialLoad: true,
 
   login: async (email: string, password: string): Promise<void> => {
-    const { setLoading } = useGlobalStore.getState();
-    setLoading(true);
     try {
       await account.createEmailPasswordSession(email, password);
-      showMessage('success', messages.auth.loginSuccess);
+
       await useAuthStore.getState().fetchUser();
+
+      const { user } = useAuthStore.getState();
+      if (!user?.labels?.includes('admin')) {
+        // Если пользователь не администратор, завершаем сессию
+        await account.deleteSession('current');
+        showMessage(
+          'error',
+          'Вход запрещён: доступ только для администраторов.'
+        );
+        console.error('Вход запрещён: пользователь не администратор.');
+        return;
+      }
+
+      showMessage('success', messages.auth.loginSuccess);
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : String(error);
       console.error('Ошибка авторизации:', error);
       showMessage('error', translateError(errorMessage));
-    } finally {
-      setLoading(false);
     }
   },
 

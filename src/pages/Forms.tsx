@@ -1,18 +1,15 @@
 import Title from '@/components/ui/Ttitle';
 import useGlobalStore from '@/store/useGlobalStore';
-import { formatDate } from '@/utils/formatDate';
 import {
   Box,
   Button,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   Stack,
 } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ruRU } from '@mui/x-data-grid/locales';
 import useFormStore from '@/store/useFormStore';
@@ -22,7 +19,6 @@ const Forms = () => {
   const setLoading = useGlobalStore((state) => state.setLoading);
   const isLoading = useGlobalStore((state) => state.isLoading);
   const { forms, fetchForms } = useFormStore();
-  const navigate = useNavigate();
 
   const [activeFilter, setActiveFilter] = useState(false);
 
@@ -83,10 +79,10 @@ const Forms = () => {
     { field: '$id', headerName: 'ID', flex: 1, sortable: false },
 
     {
-      field: 'actions',
-      headerName: 'Действие',
+      field: 'status',
+      headerName: 'Статус',
       flex: 1,
-      renderCell: (params) => (
+      renderCell: () => (
         <FormControl sx={{ m: 1, minWidth: 120 }}>
           <Select
             displayEmpty

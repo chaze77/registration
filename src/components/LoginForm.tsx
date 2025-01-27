@@ -1,5 +1,6 @@
 import { fields } from '@/constants/formValues';
 import useAuthStore from '@/store/useAuthStore';
+import useGlobalStore from '@/store/useGlobalStore';
 import {
   Box,
   Button,
@@ -10,6 +11,7 @@ import {
 } from '@mui/material';
 
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import Spinner from './ui/Spinner';
 
 interface FormValues {
   email: string;
@@ -28,10 +30,20 @@ const Login = () => {
     },
   });
 
+  const isLoading = useGlobalStore((state) => state.isLoading);
+  const setLoading = useGlobalStore((state) => state.setLoading);
+
   const login = useAuthStore((state) => state.login);
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    await login(data.email, data.password);
+    setLoading(true);
+    try {
+      await login(data.email, data.password);
+    } catch (error) {
+      console.error('Ошибка при авторизации:', error);
+    } finally {
+      setLoading(false); // Гарантированно выполнится
+    }
   };
 
   return (
@@ -97,6 +109,7 @@ const Login = () => {
           Войти
         </Button>
       </Box>
+      {isLoading && <Spinner />}
     </Container>
   );
 };

@@ -23,10 +23,12 @@ const RequireAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return <Spinner />;
   }
 
-  if (!user) {
+  // Если пользователь не найден или у него нет метки "admin"
+  if (!user || !user?.labels?.includes('admin')) {
     return <Authorization />;
   }
 
+  // Если пользователь найден и он администратор
   return <>{children}</>;
 };
 

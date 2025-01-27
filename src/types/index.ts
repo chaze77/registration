@@ -21,3 +21,9 @@ export interface User {
   name?: string;
   [key: string]: any;
 }
+
+export interface IMuseum extends IBaseDocument {
+  name: string;
+  tikect_info: string;
+  address: string;
+}

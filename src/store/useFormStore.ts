@@ -5,9 +5,13 @@ import showMessage from '@/hooks/useNotify';
 import { IForm } from '@/types';
 import messages from '@/constants/messages';
 
+type FormFilters = {
+  email?: string;
+  name?: string;
+};
 type FormState = {
   forms: IForm[] | null;
-  fetchForms: (filters?) => Promise<void>;
+  fetchForms: (filters?: FormFilters) => Promise<void>;
   update: (id: string, formState: { name: string }) => Promise<void>;
 };
 
@@ -21,12 +25,10 @@ const useFormStore = create<FormState>((set) => ({
     try {
       const queryFilters: string[] = [];
 
-      // Добавляем фильтр по email, если он указан
       if (filters?.email) {
         queryFilters.push(Query.equal('email', [filters.email]));
       }
 
-      // Добавляем фильтр по name, если он указан
       if (filters?.name) {
         queryFilters.push(Query.equal('name', [filters.name]));
       }
